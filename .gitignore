@@ -1,0 +1,4 @@
+# Construct 3 archives
+# (Intentionally tracking IsometricBomber.c3p for download.)
+*.c3p
+!IsometricBomber.c3p

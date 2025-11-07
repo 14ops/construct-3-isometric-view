@@ -1,0 +1,311 @@
+{
+  "editorType": "construct3",
+  "editorVersion": "r341",
+  "project": {
+    "type": "project",
+    "name": "Isometric Bomber Prototype",
+    "description": "Prototype combining Hades-style isometric presentation with Bomberman mechanics.",
+    "author": "",
+    "version": "1.0.0.0",
+    "savedWithVersion": "r341",
+    "savedWithBranch": "stable",
+    "runtime": "c3runtime",
+    "useWebGL": true,
+    "firstLayout": "IsometricArena",
+    "pixelRounding": false,
+    "globalScriptModules": [],
+    "families": [],
+    "objectFolders": [],
+    "objectTypes": [
+      {
+        "type": "object-type",
+        "name": "Player",
+        "id": "player",
+        "plugin-id": "Sprite",
+        "sid": 1,
+        "isGlobal": false,
+        "instanceVariables": [
+          {"name": "bombs", "type": "number", "defaultValue": 1},
+          {"name": "range", "type": "number", "defaultValue": 2},
+          {"name": "cooldown", "type": "number", "defaultValue": 0}
+        ],
+        "behaviors": [
+          {
+            "type": "behavior",
+            "name": "EightDir",
+            "behavior-id": "EightDirection",
+            "sid": 2,
+            "properties": {
+              "MaxSpeed": 250,
+              "Acceleration": 1500,
+              "Deceleration": 1500,
+              "Rotate": false,
+              "Directions": "8"
+            }
+          }
+        ],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 3,
+            "speed": 5,
+            "loop": true,
+            "frames": [
+              {
+                "image": "objectTypes/Player/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Enemy",
+        "id": "enemy",
+        "plugin-id": "Sprite",
+        "sid": 4,
+        "isGlobal": false,
+        "instanceVariables": [
+          {"name": "wanderTime", "type": "number", "defaultValue": 0}
+        ],
+        "behaviors": [],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 5,
+            "speed": 5,
+            "loop": true,
+            "frames": [
+              {
+                "image": "objectTypes/Enemy/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Bomb",
+        "id": "bomb",
+        "plugin-id": "Sprite",
+        "sid": 6,
+        "isGlobal": false,
+        "instanceVariables": [
+          {"name": "timer", "type": "number", "defaultValue": 2.5},
+          {"name": "range", "type": "number", "defaultValue": 2}
+        ],
+        "behaviors": [],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 7,
+            "speed": 5,
+            "loop": true,
+            "frames": [
+              {
+                "image": "objectTypes/Bomb/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Explosion",
+        "id": "explosion",
+        "plugin-id": "Sprite",
+        "sid": 8,
+        "isGlobal": false,
+        "instanceVariables": [
+          {"name": "timer", "type": "number", "defaultValue": 0.5}
+        ],
+        "behaviors": [],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 9,
+            "speed": 0,
+            "loop": false,
+            "frames": [
+              {
+                "image": "objectTypes/Explosion/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Crate",
+        "id": "crate",
+        "plugin-id": "Sprite",
+        "sid": 10,
+        "isGlobal": false,
+        "instanceVariables": [],
+        "behaviors": [],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 11,
+            "speed": 0,
+            "loop": false,
+            "frames": [
+              {
+                "image": "objectTypes/Crate/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Wall",
+        "id": "wall",
+        "plugin-id": "Sprite",
+        "sid": 12,
+        "isGlobal": false,
+        "instanceVariables": [],
+        "behaviors": [],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 13,
+            "speed": 0,
+            "loop": false,
+            "frames": [
+              {
+                "image": "objectTypes/Wall/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Tile",
+        "id": "tile",
+        "plugin-id": "Sprite",
+        "sid": 14,
+        "isGlobal": false,
+        "instanceVariables": [],
+        "behaviors": [],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 15,
+            "speed": 0,
+            "loop": true,
+            "frames": [
+              {
+                "image": "objectTypes/Tile/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Spawner",
+        "id": "spawner",
+        "plugin-id": "Sprite",
+        "sid": 16,
+        "isGlobal": false,
+        "instanceVariables": [
+          {"name": "interval", "type": "number", "defaultValue": 4}
+        ],
+        "behaviors": [],
+        "effects": [],
+        "animations": [
+          {
+            "name": "Default",
+            "sid": 17,
+            "speed": 0,
+            "loop": false,
+            "frames": [
+              {
+                "image": "objectTypes/Spawner/images/Default-000.png",
+                "width": 64,
+                "height": 64,
+                "originX": 0.5,
+                "originY": 0.5,
+                "duration": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "object-type",
+        "name": "Keyboard",
+        "id": "keyboard",
+        "plugin-id": "Keyboard",
+        "sid": 20,
+        "isGlobal": true,
+        "instanceVariables": [],
+        "behaviors": [],
+        "effects": [],
+        "animations": []
+      }
+    ],
+    "eventSheets": [
+      {
+        "type": "event-sheet",
+        "name": "MainEvents",
+        "sid": 18,
+        "file": "eventSheets/MainEvents.json"
+      }
+    ],
+    "layouts": [
+      {
+        "type": "layout",
+        "name": "IsometricArena",
+        "sid": 19,
+        "eventSheet": "MainEvents",
+        "file": "layouts/IsometricArena/layout.json"
+      }
+    ],
+    "files": []
+  }
+}

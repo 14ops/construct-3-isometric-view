@@ -1,0 +1,349 @@
+{
+  "type": "event-sheet",
+  "name": "MainEvents",
+  "sid": 18,
+  "root": {
+    "type": "block",
+    "sid": 1000,
+    "subevents": [
+      {
+        "type": "event",
+        "sid": 1001,
+        "conditions": [
+          {
+            "type": "System",
+            "sid": 1002,
+            "method": "OnStartLayout",
+            "parameters": []
+          }
+        ],
+        "actions": [
+          {
+            "type": "System",
+            "sid": 1003,
+            "method": "SetLayerScale",
+            "parameters": ["Ground", "1", "1"]
+          },
+          {
+            "type": "System",
+            "sid": 1004,
+            "method": "SetLayerScale",
+            "parameters": ["Objects", "1", "1"]
+          },
+          {
+            "type": "Player",
+            "sid": 1005,
+            "method": "SetInstanceVar",
+            "parameters": ["bombs", "2"]
+          },
+          {
+            "type": "Player",
+            "sid": 1006,
+            "method": "SetInstanceVar",
+            "parameters": ["cooldown", "0"]
+          }
+        ],
+        "subevents": []
+      },
+      {
+        "type": "event",
+        "sid": 1007,
+        "conditions": [
+          {
+            "type": "System",
+            "sid": 1008,
+            "method": "EveryTick",
+            "parameters": []
+          }
+        ],
+        "actions": [
+          {
+            "type": "Player",
+            "sid": 1009,
+            "method": "SetAngle",
+            "parameters": ["0"]
+          },
+          {
+            "type": "Player",
+            "sid": 1010,
+            "method": "SetInstanceVar",
+            "parameters": ["cooldown", "max(Player.cooldown - dt, 0)"]
+          }
+        ],
+        "subevents": []
+      },
+      {
+        "type": "event",
+        "sid": 1011,
+        "conditions": [
+          {
+            "type": "Keyboard",
+            "sid": 1012,
+            "method": "OnKeyPressed",
+            "parameters": ["Space"]
+          },
+          {
+            "type": "Player",
+            "sid": 1013,
+            "method": "CompareInstanceVar",
+            "parameters": ["cooldown", "<=", "0"]
+          },
+          {
+            "type": "Player",
+            "sid": 1014,
+            "method": "CompareInstanceVar",
+            "parameters": ["bombs", ">", "0"]
+          }
+        ],
+        "actions": [
+          {
+            "type": "System",
+            "sid": 1015,
+            "method": "CreateObject",
+            "parameters": ["Bomb", "Objects", "round(Player.X / 64) * 64", "round(Player.Y / 64) * 64"]
+          },
+          {
+            "type": "Bomb",
+            "sid": 1016,
+            "method": "SetInstanceVar",
+            "parameters": ["timer", "2"]
+          },
+          {
+            "type": "Bomb",
+            "sid": 1017,
+            "method": "SetInstanceVar",
+            "parameters": ["range", "Player.range"]
+          },
+          {
+            "type": "Player",
+            "sid": 1018,
+            "method": "SetInstanceVar",
+            "parameters": ["cooldown", "0.35"]
+          },
+          {
+            "type": "Player",
+            "sid": 1019,
+            "method": "SetInstanceVar",
+            "parameters": ["bombs", "Player.bombs - 1"]
+          }
+        ],
+        "subevents": []
+      },
+      {
+        "type": "event",
+        "sid": 1020,
+        "conditions": [
+          {
+            "type": "System",
+            "sid": 1021,
+            "method": "EveryTick",
+            "parameters": []
+          }
+        ],
+        "actions": [],
+        "subevents": [
+          {
+            "type": "event",
+            "sid": 1022,
+            "conditions": [
+              {
+                "type": "System",
+                "sid": 1023,
+                "method": "ForEach",
+                "parameters": ["Bomb"]
+              }
+            ],
+            "actions": [
+              {
+                "type": "Bomb",
+                "sid": 1024,
+                "method": "SetInstanceVar",
+                "parameters": ["timer", "Bomb.timer - dt"]
+              }
+            ],
+            "subevents": [
+              {
+                "type": "event",
+                "sid": 1025,
+                "conditions": [
+                  {
+                    "type": "Bomb",
+                    "sid": 1026,
+                    "method": "CompareInstanceVar",
+                    "parameters": ["timer", "<=", "0"]
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "System",
+                    "sid": 1027,
+                    "method": "CreateObject",
+                    "parameters": ["Explosion", "Objects", "Bomb.X", "Bomb.Y"]
+                  },
+                  {
+                    "type": "System",
+                    "sid": 1028,
+                    "method": "CreateObject",
+                    "parameters": ["Explosion", "Objects", "Bomb.X + 64", "Bomb.Y"]
+                  },
+                  {
+                    "type": "System",
+                    "sid": 1029,
+                    "method": "CreateObject",
+                    "parameters": ["Explosion", "Objects", "Bomb.X - 64", "Bomb.Y"]
+                  },
+                  {
+                    "type": "System",
+                    "sid": 1030,
+                    "method": "CreateObject",
+                    "parameters": ["Explosion", "Objects", "Bomb.X", "Bomb.Y + 64"]
+                  },
+                  {
+                    "type": "System",
+                    "sid": 1031,
+                    "method": "CreateObject",
+                    "parameters": ["Explosion", "Objects", "Bomb.X", "Bomb.Y - 64"]
+                  },
+                  {
+                    "type": "Bomb",
+                    "sid": 1032,
+                    "method": "Destroy",
+                    "parameters": []
+                  },
+                  {
+                    "type": "Player",
+                    "sid": 1033,
+                    "method": "SetInstanceVar",
+                    "parameters": ["bombs", "min(Player.bombs + 1, 3)"]
+                  }
+                ],
+                "subevents": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "event",
+        "sid": 1034,
+        "conditions": [
+          {
+            "type": "System",
+            "sid": 1035,
+            "method": "EveryTick",
+            "parameters": []
+          }
+        ],
+        "actions": [],
+        "subevents": [
+          {
+            "type": "event",
+            "sid": 1036,
+            "conditions": [
+              {
+                "type": "System",
+                "sid": 1037,
+                "method": "ForEach",
+                "parameters": ["Explosion"]
+              }
+            ],
+            "actions": [
+              {
+                "type": "Explosion",
+                "sid": 1038,
+                "method": "SetInstanceVar",
+                "parameters": ["timer", "Explosion.timer - dt"]
+              }
+            ],
+            "subevents": [
+              {
+                "type": "event",
+                "sid": 1039,
+                "conditions": [
+                  {
+                    "type": "Explosion",
+                    "sid": 1040,
+                    "method": "CompareInstanceVar",
+                    "parameters": ["timer", "<=", "0"]
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "Explosion",
+                    "sid": 1041,
+                    "method": "Destroy",
+                    "parameters": []
+                  }
+                ],
+                "subevents": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "event",
+        "sid": 1042,
+        "conditions": [
+          {
+            "type": "Explosion",
+            "sid": 1043,
+            "method": "IsOverlapping",
+            "parameters": ["Crate"]
+          }
+        ],
+        "actions": [
+          {
+            "type": "Crate",
+            "sid": 1044,
+            "method": "Destroy",
+            "parameters": []
+          }
+        ],
+        "subevents": []
+      },
+      {
+        "type": "event",
+        "sid": 1045,
+        "conditions": [
+          {
+            "type": "Explosion",
+            "sid": 1046,
+            "method": "IsOverlapping",
+            "parameters": ["Enemy"]
+          }
+        ],
+        "actions": [
+          {
+            "type": "Enemy",
+            "sid": 1047,
+            "method": "Destroy",
+            "parameters": []
+          }
+        ],
+        "subevents": []
+      },
+      {
+        "type": "event",
+        "sid": 1048,
+        "conditions": [
+          {
+            "type": "Explosion",
+            "sid": 1049,
+            "method": "IsOverlapping",
+            "parameters": ["Player"]
+          }
+        ],
+        "actions": [
+          {
+            "type": "System",
+            "sid": 1050,
+            "method": "RestartLayout",
+            "parameters": []
+          }
+        ],
+        "subevents": []
+      }
+    ]
+  }
+}
