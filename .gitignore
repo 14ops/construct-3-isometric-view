@@ -1,4 +1,2 @@
-# Construct 3 archives
-# (Intentionally tracking IsometricBomber.c3p for download.)
+# Construct 3 archives are generated artifacts; keep them out of git
 *.c3p
-!IsometricBomber.c3p
